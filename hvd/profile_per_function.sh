@@ -1,0 +1,1 @@
+horovodrun -np 8 kernprof -l -v main_profile_tagging.py 
