@@ -1,12 +1,12 @@
-from unet import custom_unet
+from unet_profile_tagging import custom_unet
 import os
 import horovod.tensorflow as hvd
 import tensorflow as tf
 from utils_logger import Logger, StdOutBackend, JSONStreamBackend, Verbosity
 import argparse
-from data_loader import Dataset
+from data_loader_profile_tagging import Dataset
 #from run_v2 import train,restore_checkpoint # no mixed_precision PURE horovod 
-from run import train, restore_checkpoint
+from run_profile_tagging import train, restore_checkpoint
 
 
 @profile
@@ -62,7 +62,7 @@ def main(params):
         filters=7,
         num_layers=4,
         output_activation='softmax')
-    #model.compile(optimizer=opt, loss=combined_dice_binary_loss, metrics=[dice_coef],experimental_run_tf_function=False)
+    
 
     #start training 
     train(params, model, dataset, logger)
