@@ -42,6 +42,7 @@ within jupyter notebook , get a terminal and then run
 
 #### Step 6 - to use Nsight run the below to get the .qdrep file for visualization
 `bash 2a_Nsight_run_TF2MirroredStrategy.sh `
+Note, if you do NOT have all 8 gpus available , modify number of available gpus in line 69 as below shown
 ![alt text](<./notebook_pics/run_Nsight_tf2_strategy.JPG>) 
 
 #### Step 7 - similarly, to get line_profile per python function run the below 
@@ -69,7 +70,7 @@ will automatically trace which gpu is used for what tasks !
 go to [CityScape official website ](https://www.cityscapes-dataset.com/)
 dataset used is : leftImg8bit_trainvaltest.zip [11GB]
 ![alt text](<./notebook_pics/dataset_used.JPG>) 
-
+Note I only uploaded 100 pre-processed images (=img ) , corresponding masks ( =gt, with original 31 classes) and the 8 categories masks (= gt_cat ) all under 8data folder 
 
 # Horovod implementation for TF2 
 cd into hvd folder 
