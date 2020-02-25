@@ -1,7 +1,4 @@
-# TF2_comparison
-## use the below to train with horovod 
-# big thanks to  Michal Marcinkiewicz @michalm for his work of TF2 Unet for medical image, my horovod implmentation is completely based on his fantastic work   
-[link to the TF2 Unet implementation](https://gitlab-master.nvidia.com/dl/JoC/unet_medical_tf2/tree/nvidia-release-20.01)
+# TF2_comparison Veoneer workshop 
 
 ## Executive summary - 
 This repository provides scripts to training full resolution 1024x2048x3 of cityscape data with TF2.0 on 1CPU vs 1GPU vs multi-gpus (8 gpus) on a single DGX 
