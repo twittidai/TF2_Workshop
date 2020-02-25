@@ -50,7 +50,7 @@ Note, if you do NOT have all 8 gpus available , modify number of available gpus 
 ![alt text](<./notebook_pics/run_line_profiler_on_TF2_strategy.JPG>) 
 
 
-#### Step 8 - to compare 1 CPU vs 1 GPU vs multiple GPUs training run through the jupyter notebook below
+#### Step 8 - to compare 1 CPU vs 1 GPU vs multiple GPUs training run through the jupyter notebook 
 3_single_vs_multigpu_model_training_add_split_visualize(final).ipynb 
 
 to compare training time took for 1 CPU vs 1 GPU vs multiGPU training 
@@ -87,8 +87,8 @@ run notebook below
 ### to run line_profiler on horovod implementation 
 `bash profile_per_function.sh ` 
 
-Note: to verify when to do sharding matters, please modify file data_loader_profile_tagging.py 
-comment line 29 and uncomment line 69 , then re-run the bash command above 
+#### Note: to verify when to do sharding matters, please modify file data_loader_profile_tagging.py 
+#### comment out line 21 and uncomment line 69 , then re-run the bash command above 
 ![alt text](<./notebook_pics/when_to_shard_matters.JPG>)
 
 
