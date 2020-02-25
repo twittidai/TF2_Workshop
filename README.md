@@ -45,10 +45,18 @@ within jupyter notebook , get a terminal and then run
 Note, if you do NOT have all 8 gpus available , modify number of available gpus in line 69 as below shown
 ![alt text](<./notebook_pics/run_Nsight_tf2_strategy.JPG>) 
 
-#### Step 7 - similarly, to get line_profile per python function run the below 
+##### Similarly , one can also run Nsight for the horovod implementation as well
+`cd hvd 
+bash 2a_run_nsight_horovod.sh `
+
+#### Step 7 - similarly, to get line_profiler per python function run the below 
 `bash 2b_run_line_profiler.sh tf2_MirroredStrategy4line_profiler.py `
 ![alt text](<./notebook_pics/run_line_profiler_on_TF2_strategy.JPG>) 
-
+##### Similarly , one can also run Cprofile or line_profiler for the horovod implementation as well
+`cd hvd 
+bash 2b_run_cProfile_horovod.sh `
+or 
+`bash 2c_run_line_profile_per_function.sh ` 
 
 #### Step 8 - to compare 1 CPU vs 1 GPU vs multiple GPUs training run through the jupyter notebook 
 3_single_vs_multigpu_model_training_add_split_visualize(final).ipynb 
