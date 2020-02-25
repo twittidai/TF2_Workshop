@@ -54,16 +54,23 @@ Note, if you do NOT have all 8 gpus available , modify number of available gpus 
 3_single_vs_multigpu_model_training_add_split_visualize(final).ipynb 
 
 to compare training time took for 1 CPU vs 1 GPU vs multiGPU training 
+
 multigpus also yield larger global training batch size than using single gpu 
-for example, if one use 4 batch per gpu --> using 8 gpus will yield 4 x 8 = 32 global batch sizes 
+for example, if one use 4 batch per gpu --> using all 8 gpus will yield 4 x 8 = 32 global batch sizes disregard which method you use ( TF strategy or Horovod )
+
+
+below show comparison of training with multiple GPUs utilization 
+left= TF2 MirroredStrategy , right= horovod 
 ![alt text](<./notebook_pics/nvidia_smi_compare.JPG>) 
+using 8 gpus with exact same Unet, batch_size and epochs
+
 
 ##### track which GPU is used, insert this line in the begining of the notebook 
 `import tensorflow as tf
 print(tf.__version__)
 tf.debugging.set_log_device_placement(True)` 
 
-will automatically trace which gpu is used for what tasks !
+will automatically trace which gpu is used for what !
 
 
 ## Download and preprocess the data.
@@ -72,26 +79,20 @@ dataset used is : leftImg8bit_trainvaltest.zip [11GB]
 ![alt text](<./notebook_pics/dataset_used.JPG>) 
 Note I only uploaded 100 pre-processed images (=img ) , corresponding masks ( =gt, with original 31 classes) and the 8 categories masks (= gt_cat ) all under 8data folder 
 
-# Horovod implementation for TF2 
+# Horovod implementation for TF2 with data sharding 
 cd into hvd folder 
 run notebook below 
 `3_multiGPU_hvd_tfData_model_train.ipynb `
 
-```
-Parameters
-The complete list of the available parameters for the main.py script contains:
+### to run line_profiler on horovod implementation 
+`bash profile_per_function.sh ` 
 
---exec_mode: for the moment only train mode is available
-
---batch_size: Size of each minibatch per GPU (default: 1).
-
---max_steps: Maximum number of steps (batches) for training (default: 1000).
-
---use_amp: Enable automatic mixed precision (default: False).
-```
+Note: to verify when to do sharding matters, please modify file data_loader_profile_tagging.py 
+comment line 29 and uncomment line 69 , then re-run the bash command above 
+![alt text](<./notebook_pics/when_to_shard_matters.JPG>)
 
 
-Command-line options
+### Command-line options for main.py with horovod implementation 
 To see the full list of available options and their descriptions, use the -h or --help command-line option, for example:
 ```
 python main.py --help
