@@ -14,7 +14,7 @@ TensorFlow 19.12-tf2-py3 NGC container
 #### Step 0 -  pull the git repo 
 git clone https://github.com/Zenodia/Veoneer_Workshop.git
 
-cd into Veoneer_Workshop 
+cd into the Veoneer_Workshop folder
 
 #### Step 1 - run docker image pulled from NGC repo
 `sudo docker run --runtime=nvidia -it --rm -p <port_number>:<port_number -v /your/local/path/:/workspace nvcr.io/nvidia/tensorflow:19.12-tf2-py3 `
@@ -27,11 +27,12 @@ or
 #### Step 3 - 
 `bash 1b_launch_jupyter.sh <port_number> `
 to run jupyter notebook in the host browser , remember to use the same port number you specify in docker run on step 1
-![alt text](<./notebook_pics/run_jupyter.JPG>) 
+
 
 #### Step 4 - call out a preferred browser and use jupyter as UI to interact with the running docker
 call out firefox ( or other default browser )
 type in in the browser url : https://0.0.0.0:<port_number> 
+![alt text](<./notebook_pics/run_jupyter.JPG>) 
 
 #### Step 5 - since the data has been pre_processed , one needs to get directory txt files 
 within jupyter notebook , get a terminal and then run 
