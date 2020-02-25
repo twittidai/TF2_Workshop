@@ -17,7 +17,7 @@ git clone https://github.com/Zenodia/Veoneer_Workshop.git
 cd into the Veoneer_Workshop folder
 
 #### Step 1 - run docker image pulled from NGC repo
-`sudo docker run --runtime=nvidia -it --rm -p <port_number>:<port_number -v /your/local/path/:/workspace nvcr.io/nvidia/tensorflow:19.12-tf2-py3 `
+`sudo docker run --runtime=nvidia -it --rm -–cap-add=SYS_ADMIN -p <port_number>:<port_number -v /your/local/path/:/workspace nvcr.io/nvidia/tensorflow:19.12-tf2-py3 `
 or 
 `bash 0_run_docker.sh <port_number>  /your/local/path/ `
 
