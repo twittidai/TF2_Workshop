@@ -1,1 +1,0 @@
-nsys profile -y 10 -d 120 -w true -t "cudnn,cuda,osrt,nvtx" --force-overwrite true -o ./outputs/nsys_profile_hvd horovodrun -np 8 python main.py  --model_dir /checkpt --batch_size 1  --exec_mode train --use_amp --max_steps 100
