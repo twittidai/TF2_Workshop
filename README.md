@@ -36,6 +36,7 @@ type in in the browser url : https://0.0.0.0:<port_number>
 
 #### Step 5 - since the data has been pre_processed , one needs to get directory txt files 
 within jupyter notebook , get a terminal and then run 
+![alt text](<./notebook_pics/get_a_terminal.JPG>) 
 `python 1c_create_directory_files.py `
 ![alt text](<./notebook_pics/create_directory_files.JPG>) 
 
