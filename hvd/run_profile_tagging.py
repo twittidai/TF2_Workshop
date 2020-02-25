@@ -65,8 +65,9 @@ def train(params, model, dataset, logger):
 
     ce_loss = tf.keras.metrics.Mean(name='ce_loss')
     f1_loss = tf.keras.metrics.Mean(name='dice_loss')
-    @profile
+    
     @tf.function
+    @profile
     def train_step(features, labels, warmup_batch=False):
         with tf.GradientTape() as tape:
             output_map = model(features)
