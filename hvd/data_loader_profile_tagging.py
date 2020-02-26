@@ -20,7 +20,7 @@ class Dataset:
         self.dataset=self.img_files.map(lambda x: self._process_path(x)) 
         self.dataset = self.dataset.shard(self.num_gpus, self.gpu_id)
         self.dataset = self.dataset.map(self._load_img,num_parallel_calls=multiprocessing.cpu_count()//self.num_gpus)
-        # adapt the data types, images to fp16, gt (one_hot) stay in int close before softmax calc
+        # adapt the data types
         self.dataset = self.dataset.map(self._adapt_types_and_transpose,num_parallel_calls=multiprocessing.cpu_count()//self.num_gpus)
         self.dataset = self.dataset.map(self._one_hot,num_parallel_calls=multiprocessing.cpu_count()//self.num_gpus)
         print("the global batch size is ", str(batch_size*num_gpus))
@@ -48,7 +48,7 @@ class Dataset:
     @profile
     def _process_path(self,img_file_path):
         mask_file_path=tf.strings.regex_replace(img_file_path,'img','gt_cat')
-        mask_file_path=tf.strings.regex_replace(mask_file_path,'_leftImg8bit.png', '_gtFine_color.png')# '_gtFine_labelIds.png')
+        mask_file_path=tf.strings.regex_replace(mask_file_path,'_leftImg8bit.png', '_gtFine_color.png')
         
         #print(img_file_path,mask_file_path)
         img_file = tf.io.read_file(img_file_path)
@@ -58,7 +58,7 @@ class Dataset:
     @profile
     def _adapt_types_and_transpose(self,im, gt):
         im = tf.cast(im, tf.float32)
-        #im = tf.transpose(im , (2,0,1)) # make sure that the input images are with the shape = (N_batches , Channels , Height, Width) for model to eat
+        # cast gt to uint8 otherwise one hot encoding wont work
         gt = tf.cast(gt, tf.uint8)
         return im, gt
 
