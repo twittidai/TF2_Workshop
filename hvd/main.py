@@ -5,7 +5,6 @@ import tensorflow as tf
 from utils_logger import Logger, StdOutBackend, JSONStreamBackend, Verbosity
 import argparse
 from data_loader import Dataset
-#from run_v2 import train,restore_checkpoint # no mixed_precision PURE horovod 
 from run import train, restore_checkpoint
 
 
@@ -29,8 +28,8 @@ def main(params):
     os.environ['TF_SYNC_ON_FINISH'] = '0'
     os.environ['TF_AUTOTUNE_THRESHOLD'] = '2'
 
-    hvd.init()
-    #set parameters
+    hvd.init()#init horovod
+    #set gpu configurations
 
     if params.use_xla:
         tf.config.optimizer.set_jit(True)
@@ -62,7 +61,7 @@ def main(params):
         filters=7,
         num_layers=4,
         output_activation='softmax')
-    #model.compile(optimizer=opt, loss=combined_dice_binary_loss, metrics=[dice_coef],experimental_run_tf_function=False)
+    # do not use model compile as we are using gradientTape
 
     #start training 
     train(params, model, dataset, logger)
@@ -134,7 +133,7 @@ if __name__ == '__main__':
 
     PARSER.add_argument('--use_xla', dest='use_xla', action='store_true',
                         help="""Train using XLA""")
-    PARSER.set_defaults(use_amp=False)
+    PARSER.set_defaults(use_xla=False)
 
     PARSER.add_argument('--use_trt', dest='use_trt', action='store_true',
                         help="""Use TF-TRT""")
