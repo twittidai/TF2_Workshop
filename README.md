@@ -20,7 +20,10 @@ cd into the Veoneer_Workshop folder
 
 #### Step 1 - run docker image pulled from NGC repo
 `sudo docker run --runtime=nvidia -it --rm -–cap-add=SYS_ADMIN -p <port_number>:<port_number -v /your/local/path/:/workspace nvcr.io/nvidia/tensorflow:19.12-tf2-py3 `
+
 or 
+
+
 `bash 0_run_docker.sh <port_number>  /your/local/path/ `
 
 #### Step 2 - build the environment from within the docker image ran in Step 1 
@@ -48,27 +51,24 @@ Note, if you do NOT have all 8 gpus available , modify number of available gpus 
 ![alt text](<./notebook_pics/run_Nsight_tf2_strategy.JPG>) 
 
 ##### Similarly , one can also run Nsight for the horovod implementation as well
-`cd hvd 
-bash 2a_run_nsight_horovod.sh `
+`cd hvd `
+`bash 2a_run_nsight_horovod.sh `
 
 #### Step 7 - similarly, to get line_profiler per python function run the below 
 `bash 2b_run_line_profiler.sh tf2_MirroredStrategy4line_profiler.py `
 ![alt text](<./notebook_pics/run_line_profiler_on_TF2_strategy.JPG>) 
-##### Similarly , one can also run Cprofile or line_profiler for the horovod implementation as well
-`cd hvd 
-bash 2b_run_cProfile_horovod.sh `
-or 
-`bash 2c_run_line_profile_per_function.sh ` 
+output should look similar to the below 
+![alt text](<./notebook_pics/tf2_line_profiler_output.JPG>) 
+
 
 #### Step 8 - to compare 1 CPU vs 1 GPU vs multiple GPUs training run through the jupyter notebook 
 3_single_vs_multigpu_model_training_add_split_visualize(final).ipynb 
 
-note: please do NOT restart and run all cells, jupyter notebook will not release gpu memory resources, so the multi-gpu workload will not run.
+note: please do NOT restart and run all cells, jupyter notebook will not release gpu memory resources, so the multi-gpu workload will not run. after running through the 1 CPU vs 1 GPU ( with and without mixed precision cells ) , restart the notebook to release the hold of gpu resources as below shown
 ![alt text](<./notebook_pics/doNOTrunallcells.JPG>) 
-to compare training time took for 1 CPU vs 1 GPU vs multiGPU training 
 
-multigpus also yield larger global training batch size than using single gpu 
-for example, if one use 4 batch per gpu --> using all 8 gpus will yield 4 x 8 = 32 global batch sizes disregard which method you use ( TF strategy or Horovod )
+Note: multigpus also yield larger global training batch size than using single gpu disregard which methods used ( TF2 strategy vs Horovod ).
+for example - if one use 4 batch per gpu --> using all 8 gpus will yield 4 x 8 = 32 global batch sizes disregard which method you use ( TF strategy or Horovod )
 
 
 below show comparison of training with multiple GPUs utilization 
@@ -92,9 +92,8 @@ dataset used is : leftImg8bit_trainvaltest.zip [11GB]
 Note I only uploaded 100 pre-processed images (=img ) , corresponding masks ( =gt, with original 31 classes) and the 8 categories masks (= gt_cat ) all under 8data folder 
 
 # Horovod implementation for TF2 with data sharding 
-cd into hvd folder 
-run notebook below 
-`3_multiGPU_hvd_tfData_model_train.ipynb `
+click on hvd folder > click on `3_multiGPU_hvd_tfData_model_train.ipynb `
+and Restart Kernel and Run All Cells 
 
 ### run Nsight to get profile with horovod implementation
 `bash 2a_run_nsight_horovod.sh ` 
@@ -105,9 +104,14 @@ run notebook below
 ### to run line_profiler to get per function's profile with horovod implementation
 `bash 2c_run_line_profile_per_function.sh ` 
 
+scroll and look for run_profile_tagging.py 
+![alt text](<./notebook_pics/horovod_run_py_earlysharding.JPG>)
+
 #### Note: to verify when to do sharding matters, please modify file data_loader_profile_tagging.py 
 #### comment out line 21 and uncomment line 69 , then re-run the `bash 2c_run_line_profile_per_function.sh `  
 ![alt text](<./notebook_pics/when_to_shard_matters.JPG>)
+the output should be similar to the below 
+![alt text](<./notebook_pics/horovod_run_py_latesharding.JPG>)
 
 
 ### Command-line options for main.py with horovod implementation 
