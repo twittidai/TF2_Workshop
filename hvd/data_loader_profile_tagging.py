@@ -33,14 +33,10 @@ class Dataset:
         return image, gt
     @profile
     def _decode_img(self,colored_image,ch=3):
-        # convert the compressed string to a 3D uint8 tensor
         img = tf.image.decode_jpeg(colored_image, channels=ch)
-        # Use `convert_image_dtype` to convert to floats in the [0,1] range.
-
         return img
     @profile
     def _load_img(self,img_file,mask_file):
-        #gt_file=tf.io.read_file(mask_file_path)
         im=self._decode_img(img_file, ch=3)
         gt=self._decode_img(mask_file,ch=1)
         print(im.shape, gt.shape)
@@ -49,8 +45,6 @@ class Dataset:
     def _process_path(self,img_file_path):
         mask_file_path=tf.strings.regex_replace(img_file_path,'img','gt_cat')
         mask_file_path=tf.strings.regex_replace(mask_file_path,'_leftImg8bit.png', '_gtFine_color.png')
-        
-        #print(img_file_path,mask_file_path)
         img_file = tf.io.read_file(img_file_path)
         mask_file = tf.io.read_file(mask_file_path)
         return img_file, mask_file
