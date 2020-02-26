@@ -98,7 +98,7 @@ run notebook below
 `bash 2a_run_nsight_horovod.sh ` 
 
 ### run Cprofile to get profile with horovod implementation 
-`bash 2a_run_nsight_horovod.sh ` 
+`bash 2b_run_cProfile_horovod.sh ` 
 
 ### to run line_profiler to get per function's profile with horovod implementation
 `bash 2c_run_line_profile_per_function.sh ` 
