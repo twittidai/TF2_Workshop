@@ -48,7 +48,7 @@ class Dataset:
     
     def _process_path(self,img_file_path):
         mask_file_path=tf.strings.regex_replace(img_file_path,'img','gt_cat')
-        mask_file_path=tf.strings.regex_replace(mask_file_path,'_leftImg8bit.png', '_gtFine_color.png')# '_gtFine_labelIds.png')
+        mask_file_path=tf.strings.regex_replace(mask_file_path,'_leftImg8bit.png', '_gtFine_color.png')
         
         #print(img_file_path,mask_file_path)
         img_file = tf.io.read_file(img_file_path)
@@ -58,7 +58,7 @@ class Dataset:
     
     def _adapt_types_and_transpose(self,im, gt):
         im = tf.cast(im, tf.float32)
-        #im = tf.transpose(im , (2,0,1)) # make sure that the input images are with the shape = (N_batches , Channels , Height, Width) for model to eat
+        # cast gt to uint8 otherwise one hot encoding wont work
         gt = tf.cast(gt, tf.uint8)
         return im, gt
 
