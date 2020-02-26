@@ -20,7 +20,6 @@ class Dataset:
         self.dataset=self.img_files.map(lambda x: self._process_path(x)) 
         self.dataset = self.dataset.shard(self.num_gpus, self.gpu_id)
         self.dataset = self.dataset.map(self._load_img,num_parallel_calls=multiprocessing.cpu_count()//self.num_gpus)
-        # adapt the data types, images to fp16, gt (one_hot) stay in int close before softmax calc
         self.dataset = self.dataset.map(self._adapt_types_and_transpose,num_parallel_calls=multiprocessing.cpu_count()//self.num_gpus)
         self.dataset = self.dataset.map(self._one_hot,num_parallel_calls=multiprocessing.cpu_count()//self.num_gpus)
         print("the global batch size is ", str(batch_size*num_gpus))
@@ -33,14 +32,10 @@ class Dataset:
         return image, gt
     
     def _decode_img(self,colored_image,ch=3):
-        # convert the compressed string to a 3D uint8 tensor
         img = tf.image.decode_jpeg(colored_image, channels=ch)
-        # Use `convert_image_dtype` to convert to floats in the [0,1] range.
-
         return img
     
     def _load_img(self,img_file,mask_file):
-        #gt_file=tf.io.read_file(mask_file_path)
         im=self._decode_img(img_file, ch=3)
         gt=self._decode_img(mask_file,ch=1)
         print(im.shape, gt.shape)
@@ -49,8 +44,6 @@ class Dataset:
     def _process_path(self,img_file_path):
         mask_file_path=tf.strings.regex_replace(img_file_path,'img','gt_cat')
         mask_file_path=tf.strings.regex_replace(mask_file_path,'_leftImg8bit.png', '_gtFine_color.png')
-        
-        #print(img_file_path,mask_file_path)
         img_file = tf.io.read_file(img_file_path)
         mask_file = tf.io.read_file(mask_file_path)
         return img_file, mask_file
@@ -70,7 +63,6 @@ class Dataset:
         self.dataset = self.dataset.repeat() # repeat 
         self.dataset = self.dataset.shuffle(buffer_size=128) # shuffle and give a buffer size
         self.dataset = self.dataset.batch(self.batch_size) # make batch
-        # `prefetch` lets the dataset fetch batches in the background while the model
         self.dataset = self.dataset.prefetch(buffer_size=self.AUTOTUNE)  
         return self.dataset
 
