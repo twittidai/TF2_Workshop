@@ -108,7 +108,7 @@ scroll and look for run_profile_tagging.py
 ![alt text](<./notebook_pics/horovod_run_py_earlysharding.JPG>)
 
 #### Note: to verify when to do sharding matters, please modify file data_loader_profile_tagging.py 
-#### comment out line 21 and uncomment line 69 , then re-run the `bash 2c_run_line_profile_per_function.sh `  
+#### comment out line 21 and uncomment line 63 , then re-run the `bash 2c_run_line_profile_per_function.sh `  
 ![alt text](<./notebook_pics/when_to_shard_matters.JPG>)
 the output should be similar to the below 
 ![alt text](<./notebook_pics/horovod_run_py_latesharding.JPG>)
