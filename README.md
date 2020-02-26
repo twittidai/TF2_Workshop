@@ -61,6 +61,8 @@ or
 #### Step 8 - to compare 1 CPU vs 1 GPU vs multiple GPUs training run through the jupyter notebook 
 3_single_vs_multigpu_model_training_add_split_visualize(final).ipynb 
 
+note: please do NOT restart and run all cells, jupyter notebook will not release gpu memory resources, so the multi-gpu workload will not run.
+![alt text](<./notebook_pics/doNOTrunallcells.JPG>) 
 to compare training time took for 1 CPU vs 1 GPU vs multiGPU training 
 
 multigpus also yield larger global training batch size than using single gpu 
