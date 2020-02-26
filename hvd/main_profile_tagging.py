@@ -5,7 +5,7 @@ import tensorflow as tf
 from utils_logger import Logger, StdOutBackend, JSONStreamBackend, Verbosity
 import argparse
 from data_loader_profile_tagging import Dataset
-#from run_v2 import train,restore_checkpoint # no mixed_precision PURE horovod 
+
 from run_profile_tagging import train, restore_checkpoint
 
 
