@@ -94,11 +94,17 @@ cd into hvd folder
 run notebook below 
 `3_multiGPU_hvd_tfData_model_train.ipynb `
 
-### to run line_profiler on horovod implementation 
-`bash profile_per_function.sh ` 
+### run Nsight to get profile with horovod implementation
+`bash 2a_run_nsight_horovod.sh ` 
+
+### run Cprofile to get profile with horovod implementation 
+`bash 2a_run_nsight_horovod.sh ` 
+
+### to run line_profiler to get per function's profile with horovod implementation
+`bash 2c_run_line_profile_per_function.sh ` 
 
 #### Note: to verify when to do sharding matters, please modify file data_loader_profile_tagging.py 
-#### comment out line 21 and uncomment line 69 , then re-run the bash command above 
+#### comment out line 21 and uncomment line 69 , then re-run the `bash 2c_run_line_profile_per_function.sh `  
 ![alt text](<./notebook_pics/when_to_shard_matters.JPG>)
 
 
