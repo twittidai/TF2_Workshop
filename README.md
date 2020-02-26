@@ -2,6 +2,8 @@
 
 ## Executive summary - 
 This repository provides scripts to training full resolution 1024x2048x3 of cityscape data with TF2.0 on 1CPU vs 1GPU vs multi-gpus (8 gpus) on a single DGX 
+
+
 The data has been pre-processed and the labels were shrinked from 31 classes to 8 categories for simplification
 
 ## Requirements -
