@@ -1,4 +1,4 @@
-# TF2_comparison Veoneer workshop 
+# TF2_comparison workshop 
 
 ## Executive summary - 
 This repository provides scripts to training full resolution 1024x2048x3 of cityscapes data with TF2.0 on 1CPU vs 1GPU vs multi-gpus (8 gpus) on a single DGX 
@@ -15,7 +15,7 @@ TensorFlow 19.12-tf2-py3 NGC container
 
 ## Quick Start Guide with Steps 
 #### Step 0 -  pull the git repo 
-git clone https://github.com/Zenodia/Veoneer_Workshop.git
+git clone https://github.com/Zenodia/TF2_Workshop.git
 
 cd into the Veoneer_Workshop folder
 
