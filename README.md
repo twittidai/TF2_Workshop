@@ -1,13 +1,14 @@
 # TF2_comparison Veoneer workshop 
 
 ## Executive summary - 
-This repository provides scripts to training full resolution 1024x2048x3 of cityscape data with TF2.0 on 1CPU vs 1GPU vs multi-gpus (8 gpus) on a single DGX 
+This repository provides scripts to training full resolution 1024x2048x3 of cityscapes data with TF2.0 on 1CPU vs 1GPU vs multi-gpus (8 gpus) on a single DGX 
 
 
 The data has been pre-processed and the labels were shrinked from 31 classes to 8 categories for simplification
 
 ## Requirements -
-This repository use docker container from  NGC repo and run and tested on DGX-1 with Linux (ubuntu 18.04) as OS with 8 V100 GPUs
+This repository use docker container from  NGC repo (go to https://ngc.nvidia.com/ ) and run and tested on DGX-1 with Linux (ubuntu 18.04) as OS with 8 V100 GPUs
+
 
 ## NVIDIA Docker used -
 TensorFlow 19.12-tf2-py3 NGC container 
@@ -51,7 +52,8 @@ Note, if you do NOT have all 8 gpus available , modify number of available gpus 
 ![alt text](<./notebook_pics/run_Nsight_tf2_strategy.JPG>) 
 
 ##### Similarly , one can also run Nsight for the horovod implementation as well
-`cd hvd `
+`cd hvd  `
+then
 `bash 2a_run_nsight_horovod.sh `
 
 #### Step 7 - similarly, to get line_profiler per python function run the below 
@@ -83,13 +85,6 @@ print(tf.__version__)
 tf.debugging.set_log_device_placement(True)` 
 
 will automatically trace which gpu is used for what !
-
-
-## Download and preprocess the data.
-go to [CityScape official website ](https://www.cityscapes-dataset.com/)
-dataset used is : leftImg8bit_trainvaltest.zip [11GB]
-![alt text](<./notebook_pics/dataset_used.JPG>) 
-Note I only uploaded 100 pre-processed images (=img ) , corresponding masks ( =gt, with original 31 classes) and the 8 categories masks (= gt_cat ) all under 8data folder 
 
 # Horovod implementation for TF2 with data sharding 
 click on hvd folder > click on `3_multiGPU_hvd_tfData_model_train.ipynb `
@@ -124,3 +119,9 @@ usage: main.py [-h] [--exec_mode {train}]
                [--max_steps MAX_STEPS]
                [--use_amp]
 ```
+
+## Download and preprocess the data.
+go to [CityScape official website ](https://www.cityscapes-dataset.com/)
+dataset used is : leftImg8bit_trainvaltest.zip [11GB]
+![alt text](<./notebook_pics/dataset_used.JPG>) 
+Note I only uploaded 100 pre-processed images (=img ) , corresponding masks ( =gt, with original 31 classes) and the 8 categories masks (= gt_cat ) all under 8data folder 
