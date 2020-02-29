@@ -27,6 +27,15 @@ or
 
 `bash 0_run_docker.sh <port_number>  /your/local/path/ `
 
+
+
+note: to run TF2.1, simply replace tag 19.12-tf2-py3 to 20.02-tf2-py3 instead 
+
+
+or 
+
+`bash 0_run_docker_tf21.sh <port_number>  /your/local/path/ `
+
 #### Step 2 - build the environment from within the docker image ran in Step 1 
 `bash 1a_environment_build.sh`
 
