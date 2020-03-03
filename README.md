@@ -134,3 +134,7 @@ go to [CityScape official website ](https://www.cityscapes-dataset.com/)
 dataset used is : leftImg8bit_trainvaltest.zip [11GB]
 ![alt text](<./notebook_pics/dataset_used.JPG>) 
 Note I only uploaded 100 pre-processed images (=img ) , corresponding masks ( =gt, with original 31 classes) and the 8 categories masks (= gt_cat ) all under 8data folder 
+
+# Multinode Horovod Training
+
+Follow [this guide](hvd/multiNode-k8s.md) for a multinode Horovod training with Kubenetes and Kubeflow. 

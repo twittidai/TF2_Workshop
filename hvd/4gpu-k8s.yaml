@@ -1,0 +1,93 @@
+# This file shows how to run multi-node training benchmarks using an MPIJob,
+# with the example provided in this repository. 
+#
+# Prerequisites:
+# - Kubenetes Cluster running
+# - Kubeflow Working
+# - MPI Operator for Kubeflow
+# 
+# How to create the job
+# kubectl apply -f 4gpu-k8s.yaml
+# 
+# How to delete the job
+# kubectl delete -f 4gpu-k8s.yaml
+#
+apiVersion: kubeflow.org/v1alpha2
+kind: MPIJob
+metadata:
+  name: horovod-k8s-zenodia-t2
+spec:
+  slotsPerWorker: 1
+  cleanPodPolicy: Running
+  mpiReplicaSpecs:
+    Launcher:
+      replicas: 1 
+      template:
+         spec:
+           volumes:
+             - name: efs
+               nfs:
+# Change this line to the current path to this repository.
+                 server: your-server-ip-address
+                 path: /current/path/to/TF2_Workshop
+                 readOnly: false
+           containers:
+           - image: nvcr.io/nvidia/tensorflow:19.12-tf2-py3
+             name: tf2-hvd-benchmarks
+             volumeMounts:
+                 - name: efs
+                   mountPath: /workspace
+             command:
+              - mpirun
+              - --allow-run-as-root
+              - -np
+# change this to the number of replicas below
+              - "4"
+              - -bind-to
+              - none
+              - -map-by
+              - slot
+              - -x
+              - NCCL_DEBUG=INFO
+              - -x
+              - LD_LIBRARY_PATH
+              - -x
+              - PATH
+              - -mca
+              - pml
+              - ob1
+              - -mca
+              - btl
+              - ^openib
+              - python
+              - /workspace/hvd/main.py
+              - --model_dir 
+              - /checkpt
+              - --batch_size
+              - "4"
+              - --exec_mode
+              - train
+              - --use_amp
+              - --max_steps
+              - "1000"
+    Worker:
+#change this to the desired number of replicas
+      replicas: 4
+      template:
+        spec:
+          volumes:
+             - name: efs
+               nfs:
+# Change this line to the current path to this repository.
+                 server: your-server-ip-address
+                 path: /current/path/to/TF2_Workshop
+                 readOnly: false
+          containers:
+          - image: nvcr.io/nvidia/tensorflow:19.12-tf2-py3
+            name: tf2-hvd-benchmarks
+            volumeMounts:
+                 - name: efs
+                   mountPath: /workspace
+            resources:
+              limits:
+                nvidia.com/gpu: 1
